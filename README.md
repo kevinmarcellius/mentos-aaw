@@ -1,5 +1,8 @@
 # Marketplace API
 
+**Rayhan Putra Randi**<br>
+**2106705644**
+
 ## Overview
 
 REST API for a marketplace application built with Express.js, PostgreSQL, and Drizzle ORM.
@@ -39,6 +42,10 @@ pnpm run migrate # Run migrations
 pnpm dev
 
 ```
+
+### Notes
+1. Approve builds for `bcrypt`, `es5-ext`, `esbuild` with `pnpm approve-builds`.
+2. Set `Auto Attach` on VSC to `Always` to enable debugging.
 
 ## Environment Variables
 
