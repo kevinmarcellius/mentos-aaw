@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
+    "debug": "nodemon --watch src --ext ts --exec ts-node src/shared/docs/swagger.ts",
     "build": "tsc && tsc-alias",
     "generate": "drizzle-kit generate:pg",
     "migrate": "tsx src/db/migrate.ts",
@@ -37,10 +38,20 @@
     "@types/uuid": "^9.0.8",
     "drizzle-kit": "^0.20.14",
     "nodemon": "^3.1.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@scarf/scarf",
+      "bcrypt",
+      "es5-ext",
+      "esbuild"
+    ]
   }
 }

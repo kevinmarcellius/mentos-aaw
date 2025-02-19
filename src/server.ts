@@ -27,6 +27,9 @@ const metricsMiddleware = express_prom_bundle({
   }
 });
 
+const swaggerUI = require('swagger-ui-express');
+const swaggerDoc = require('./shared/docs/swagger.json');
+
 // Middleware
 app.use(metricsMiddleware);
 app.use(cors());
@@ -39,6 +42,8 @@ app.use('/api/cart', cartRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/tenant", tenantRoutes);
 app.use('/api/wishlist', wishlistRoutes);
+// Swagger UI
+app.use('/api-docs/', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 // Health check endpoint
 app.get('/health', (_, res) => {
