@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1739989488461,
+      "tag": "0000_quick_praxagora",
+      "breakpoints": true
+    }
+  ]
+}
