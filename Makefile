@@ -1,6 +1,7 @@
 AUTH_COMPOSE_PATH := ./authentication/docker-compose.yaml
 PRODUCT_COMPOSE_PATH := ./products/docker-compose.yaml
 TENANT_COMPOSE_PATH := ./tenant/docker-compose.yaml
+WISHLIST_COMPOSE_PATH := ./wishlist/docker-compose.yaml
 
 # run, stop authentication service
 auth-up:
@@ -20,3 +21,8 @@ tenant-up:
 tenant-down:
 	docker compose -f $(TENANT_COMPOSE_PATH) down
 
+# run, stop wishlist service
+wishlist-up:
+	docker compose -f $(WISHLIST_COMPOSE_PATH) up -d
+wishlist-down:
+	docker compose -f $(WISHLIST_COMPOSE_PATH) down
