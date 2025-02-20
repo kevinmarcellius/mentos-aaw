@@ -5,7 +5,9 @@
 
 ## Overview
 
-REST API for a marketplace application built with Express.js, PostgreSQL, and Drizzle ORM.
+Microservice based REST API for a marketplace application built with Express.js, PostgreSQL, and Drizzle ORM.
+
+Each microservice has their own dedicated database as the load of the application is currently unknown, and the services use data that mostly revolve around their own service.
 
 ## Prerequisites
 
@@ -16,18 +18,18 @@ REST API for a marketplace application built with Express.js, PostgreSQL, and Dr
 
 ## Quick Start with Docker
 
-```bash
-# Clone the repository
-git clone <repository-url>
+1. On each service, generate the database migration file with:
 
-# Copy environment file
-cp .env.example .env
+    ```bash
+    pnpm run generate
+    ```
+2. Create `.env` file, and fill the variables with the correct values (including database migration filepath).
+3. Run each services from with `make` (e.g. `make auth-up`).
 
-# Start with Docker Compose
-docker compose up
-```
 
 ## Local Development Setup
+
+On each service, run the following commands:
 
 ```bash
 # Install dependencies
@@ -39,7 +41,7 @@ pnpm run generate # Generate migrations
 pnpm run migrate # Run migrations
 
 # Start development server
-pnpm dev
+pnpm debug
 
 ```
 
@@ -49,20 +51,8 @@ pnpm dev
 
 ## Environment Variables
 
-Copy .env.example to .env and configure:
+Copy `.env.example` to `.env`` and configure the variable values accordingly.
 
-```
-TENANT_ID=47dd6b24-0b23-46b0-a662-776158d089ba
-JWT_SECRET=auth_ms_jwt_secret
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_NAME=postgres
-PORT=8000
-NODE_ENV=development
-
-```
 
 ## Available Scripts
 
@@ -72,22 +62,16 @@ pnpm build # Build production
 pnpm start # Start production server
 pnpm generate # Generate DB migrations
 pnpm migrate # Run DB migrations
+pnpm generate-token # Generate admin token
+pnpm generate-token-prod # Generate admin token on production
+pnpm debug # Run with swagger api docs
 ```
 
 ## API Endpoints
 
-Base URL: http://localhost:8000
+API documentation is available through Postman. 
 
-## Core endpoints
-
-```
-GET /health - Health check
-GET / - API information
-GET /api/product - List products
-POST /api/auth - Authentication
-GET /api/order - Orders
-GET /api/cart - Shopping cart
-```
+Import the `aaw-marketplace.postman_collection.json` and `aaw-marketplace.postman_environment.json` into Postman to use the available API documentation.
 
 ## Database Schema
 
