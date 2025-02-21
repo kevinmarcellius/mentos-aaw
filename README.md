@@ -24,7 +24,7 @@ Each microservice has their own dedicated database as the load of the applicatio
     pnpm run generate
     ```
 2. Create `.env` file, and fill the variables with the correct values (including database migration filepath).
-3. Run each services from with `make` (e.g. `make auth-up`).
+3. Run each services with `make` (e.g. `make auth-up`).
 
 
 ## Local Development Setup
@@ -45,13 +45,19 @@ pnpm debug
 
 ```
 
+For admin token, exec into authentication service then run:
+
+```
+npm run generate-token-prod
+```
+
 ### Notes
 1. Approve builds for `bcrypt`, `es5-ext`, `esbuild` with `pnpm approve-builds`.
 2. Set `Auto Attach` on VSC to `Always` to enable debugging.
 
 ## Environment Variables
 
-Copy `.env.example` to `.env`` and configure the variable values accordingly.
+Copy `.env.example` to `.env` and configure the variable values accordingly.
 
 
 ## Available Scripts
