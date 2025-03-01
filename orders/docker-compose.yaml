@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  orders:
+    build: .
+    env_file:
+      - ./.env
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - TENANT_ID=${TENANT_ID}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - postgres
+    networks:
+      - marketplace-net
+
+  postgres:
+    image: postgres:latest
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER} 
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432
+    volumes:
+      - ${DB_MIGRATION_PATH}:/docker-entrypoint-initdb.d/1_init.sql
+    networks:
+      - marketplace-net
+
+volumes:
+  postgres_data:
+
+networks:
+  marketplace-net:
+    name: marketplace-net
+    driver: bridge
