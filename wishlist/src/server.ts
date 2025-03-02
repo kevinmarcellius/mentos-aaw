@@ -16,7 +16,7 @@ const metricsMiddleware = express_prom_bundle({
   includePath: true,
   includeStatusCode: true,
   includeUp: true,
-  customLabels: { project_name: 'marketplace' },
+  customLabels: { project_name: 'marketplace-wishlists' },
   promClient: {
     collectDefaultMetrics: {}
   }
