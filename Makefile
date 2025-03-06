@@ -8,6 +8,7 @@ OBSERVABILITY_COMPOSE_PATH := ./observability/docker-compose.yaml
 
 # run all services
 all: auth-up orders-up product-up tenant-up wishlist-up observability-up
+down: auth-down orders-down product-down tenant-down wishlist-down observability-down 
 
 # run, stop authentication service
 auth-up:
