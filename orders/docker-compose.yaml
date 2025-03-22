@@ -15,11 +15,11 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     depends_on:
-      - postgres
+      - orders-db
     networks:
       - marketplace-net
 
-  postgres:
+  orders-db:
     image: postgres:latest
     env_file:
       - ./.env
@@ -31,6 +31,7 @@ services:
       - 5432
     volumes:
       - ${DB_MIGRATION_PATH}:/docker-entrypoint-initdb.d/1_init.sql
+      - ./postgres-data:/var/lib/postgresql/data
     networks:
       - marketplace-net
 
