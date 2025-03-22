@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 15s
+  
+scrape_configs:
+  - job_name: 'marketplace-auth'
+    metrics_path: '/metrics' 
+    static_configs:
+    - targets: ['authentication:8000']
+
+  - job_name: 'marketplace-orders'
+    metrics_path: '/metrics' 
+    static_configs:
+    - targets: ['orders:8002']
+
+  - job_name: 'marketplace-products'
+    metrics_path: '/metrics' 
+    static_configs:
+    - targets: ['products:8003']
+
+  - job_name: 'marketplace-tenant'
+    metrics_path: '/metrics' 
+    static_configs:
+    - targets: ['tenant:8004']
+
+  - job_name: 'marketplace-wishlist'
+    metrics_path: '/metrics' 
+    static_configs:
+    - targets: ['wishlist:8005']

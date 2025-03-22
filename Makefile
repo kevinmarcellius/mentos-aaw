@@ -3,6 +3,12 @@ ORDER_COMPOSE_PATH := ./orders/docker-compose.yaml
 PRODUCT_COMPOSE_PATH := ./products/docker-compose.yaml
 TENANT_COMPOSE_PATH := ./tenant/docker-compose.yaml
 WISHLIST_COMPOSE_PATH := ./wishlist/docker-compose.yaml
+OBSERVABILITY_COMPOSE_PATH := ./observability/docker-compose.yaml
+
+
+# run all services
+all: auth-up orders-up product-up tenant-up wishlist-up observability-up
+down: auth-down orders-down product-down tenant-down wishlist-down observability-down 
 
 # run, stop authentication service
 auth-up:
@@ -33,3 +39,9 @@ wishlist-up:
 	docker compose -f $(WISHLIST_COMPOSE_PATH) up -d
 wishlist-down:
 	docker compose -f $(WISHLIST_COMPOSE_PATH) down
+
+# run, stop observability service
+observability-up:
+	docker compose -f $(OBSERVABILITY_COMPOSE_PATH) up -d
+observability-down:
+	docker compose -f $(OBSERVABILITY_COMPOSE_PATH) down

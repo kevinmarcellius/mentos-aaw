@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - $PROM_PORT:$PROM_PORT
+    networks:
+      - marketplace-net
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - $GRAFANA_PORT:$GRAFANA_PORT
+    networks:
+      - marketplace-net
+
+networks:
+  marketplace-net:
+    name: marketplace-net
+    driver: bridge
+  
