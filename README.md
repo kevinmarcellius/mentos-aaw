@@ -77,7 +77,7 @@ pnpm debug # Run with swagger api docs
 
 API documentation is available through Postman. 
 
-Import the `aaw-marketplace.postman_collection.json` and `aaw-marketplace.postman_environment.json` into Postman to use the available API documentation.
+Import the `aaw-marketplace.postman_collection.json` and `aaw-marketplace.postman_environment.json` into Postman to use the available API documentation. Dedicated documentation in the form of Swagger generated JSON's are also available in each service's `src/docs` directory.
 
 ## Database Schema
 
