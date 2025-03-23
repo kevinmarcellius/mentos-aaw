@@ -5,6 +5,7 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cors from "cors";
 
 import productRoutes from './product/product.routes'
+import productRoutesV2 from './product/product.routes.v2'
 
 import express_prom_bundle from "express-prom-bundle";
 
@@ -30,6 +31,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/product", productRoutes);
+app.use("/api/v2/products", productRoutesV2);
 
 // Swagger UI
 if (process.env.NODE_ENV == 'development') {

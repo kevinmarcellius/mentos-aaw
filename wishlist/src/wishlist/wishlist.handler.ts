@@ -27,9 +27,22 @@ export const updateWishlistHandler = async (req: Request, res: Response) => {
     return res.status(response.status).send(response.data);
 }
 
+export const updateWishlistHandlerV2 = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { name } = req.body;
+    const response = await Service.updateWishlistServiceV2(id, name);
+    return res.status(response.status).send(response.data);
+}
+
 export const deleteWishlistHandler = async (req: Request, res: Response) => {
     const { id } = req.params;
     const response = await Service.deleteWishlistService(id);
+    return res.status(response.status).send(response.data);
+}
+
+export const deleteWishlistHandlerV2 = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const response = await Service.deleteWishlistServiceV2(id);
     return res.status(response.status).send(response.data);
 }
 
@@ -39,8 +52,20 @@ export const addProductToWishlistHandler = async (req: Request, res: Response) =
     return res.status(response.status).send(response.data);
 }
 
+export const addProductToWishlistHandlerV2 = async (req: Request, res: Response) => {
+    const { user, wishlist_id, product_id } = req.body;
+    const response = await Service.addProductToWishlistServiceV2(wishlist_id, product_id, user);
+    return res.status(response.status).send(response.data);
+}
+
 export const removeProductFromWishlistHandler = async (req: Request, res: Response) => {
     const { user, id } = req.body;
     const response = await Service.removeProductFromWishlistService(id, user);
+    return res.status(response.status).send(response.data);
+}
+
+export const removeProductFromWishlistHandlerV2 = async (req: Request, res: Response) => {
+    const { user, id } = req.body;
+    const response = await Service.removeProductFromWishlistServiceV2(id, user);
     return res.status(response.status).send(response.data);
 }
