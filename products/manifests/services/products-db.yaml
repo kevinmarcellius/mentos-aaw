@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: products-db
+  namespace: aaw-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: products-db
+  template:
+    metadata:
+      labels:
+        app: products-db
+    spec:
+      containers:
+      - name: products-db
+        image: postgres:latest
+        volumeMounts:
+          - name: products-initdb-volume
+            mountPath: /docker-entrypoint-initdb.d/
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: products-db-secrets
+              key: DB_NAME
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: products-db-secrets
+              key: DB_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: products-db-secrets
+              key: DB_PASSWORD
+        
+        ports:
+        - containerPort: 5432
+        livenessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - postgres
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: products-initdb-volume
+        configMap:
+          name: products-db-init
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: products-db
+  namespace: aaw-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: products-db
+  ports:
+  - protocol: TCP
+    port: 5434
+    targetPort: 5432
+  

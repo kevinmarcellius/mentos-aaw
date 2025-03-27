@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication-db
+  namespace: aaw-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentication-db
+  template:
+    metadata:
+      labels:
+        app: authentication-db
+    spec:
+      containers:
+      - name: authentication-db
+        image: postgres:latest
+        volumeMounts:
+          - name: authentication-initdb-volume
+            mountPath: /docker-entrypoint-initdb.d/
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: authentication-db-secrets
+              key: DB_NAME
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: authentication-db-secrets
+              key: DB_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: authentication-db-secrets
+              key: DB_PASSWORD
+        
+        ports:
+        - containerPort: 5432
+        livenessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - postgres
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: authentication-initdb-volume
+        configMap:
+          name: authentication-db-init
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authentication-db
+  namespace: aaw-test
+spec:
+  type: ClusterIP
+  selector:
+    app: authentication-db
+  ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432
