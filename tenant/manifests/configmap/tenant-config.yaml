@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tenant-config
+  namespace: aaw-backend
+data:
+  AUTH_HOST: authentication.aaw-backend.svc.cluster.local
+  DB_HOST: tenant-db.aaw-backend.svc.cluster.local
+  DB_PORT: "5435"
+  NODE_ENV: production
+  PORT: "8004"
+  TENANT_ID: e4f770bf-9181-4d75-8ebe-8a9e4db5055c

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: products
+  namespace: aaw-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: products
+  template:
+    metadata:
+      labels:
+        app: products
+    spec:
+      containers:
+      - name: products
+        image: products-products:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8003
+        envFrom:
+        - configMapRef:
+            name: products-config
+        - secretRef:
+            name: products-secrets
+        volumeMounts:
+        - name: products-storage
+          mountPath: /app/data
+      volumes:
+      - name: products-storage
+        persistentVolumeClaim:
+          claimName: products-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: products
+  namespace: aaw-backend
+spec:
+  type: NodePort
+  selector:
+    app: products
+  ports:
+  - protocol: TCP
+    port:  30003
+    targetPort: 8003

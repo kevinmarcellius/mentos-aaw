@@ -5,7 +5,7 @@
     "description": "AAW Marketplace Assignment API Docs.",
     "version": "1.0.0"
   },
-  "host": "localhost:8004",
+  "host": "localhost:8014",
   "basePath": "/",
   "schemes": [
     "http"
@@ -110,6 +110,115 @@
       }
     },
     "/api/tenant/{old_tenant_id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "old_tenant_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "example": "any"
+                },
+                "tenant_id": {
+                  "example": "any"
+                },
+                "owner_id": {
+                  "example": "any"
+                },
+                "name": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v2/tenants/{tenant_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v2/tenants/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "user": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "example": "any"
+                },
+                "tenant_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v2/tenants/{old_tenant_id}": {
       "put": {
         "description": "",
         "parameters": [

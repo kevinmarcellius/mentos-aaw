@@ -5,6 +5,7 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cors from "cors";
 
 import tenantRoutes from './tenant/tenant.routes';
+import tenantRoutesV2 from './tenant/tenant.routes.v2';
 
 import express_prom_bundle from "express-prom-bundle";
 
@@ -30,6 +31,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/tenant", tenantRoutes);
+app.use("/api/v2/tenants", tenantRoutesV2);
 // Swagger UI
 if (process.env.NODE_ENV == 'development') {
   const swaggerUI = require('swagger-ui-express');

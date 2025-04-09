@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authentication-config
+  namespace: aaw-test
+data:
+  ADMIN_TENANT_ID: 49fd2b46-cd42-4a2b-a5fb-fb3b9ed891ff
+  DB_HOST: authentication-db.aaw-test.svc.cluster.local
+  DB_PORT: "5432"
+  NODE_ENV: production
+  PORT: "8000"
+  TENANT_ID: e4f770bf-9181-4d75-8ebe-8a9e4db5055c

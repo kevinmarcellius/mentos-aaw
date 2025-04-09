@@ -5,7 +5,7 @@
     "description": "AAW Marketplace Assignment API Docs.",
     "version": "1.0.0"
   },
-  "host": "localhost:8003",
+  "host": "localhost:8013",
   "basePath": "/",
   "schemes": [
     "http"
@@ -268,6 +268,26 @@
             "type": "string"
           }
         ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v2/products/categories": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v2/products/query": {
+      "get": {
+        "description": "",
         "responses": {
           "default": {
             "description": ""
