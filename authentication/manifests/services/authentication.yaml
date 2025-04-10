@@ -44,5 +44,6 @@ spec:
     app: authentication
   ports:
   - protocol: TCP
-    port:  30000
+    nodePort:  30000
+    port: 8000
     targetPort: 8000

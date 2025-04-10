@@ -44,6 +44,7 @@ spec:
     app: wishlist
   ports:
   - protocol: TCP
-    port:  30005
+    nodePort:  30005
+    port:  8005
     targetPort: 8005
     

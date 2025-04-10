@@ -44,5 +44,6 @@ spec:
     app: products
   ports:
   - protocol: TCP
-    port:  30003
+    nodePort:  30003
+    port: 8003
     targetPort: 8003

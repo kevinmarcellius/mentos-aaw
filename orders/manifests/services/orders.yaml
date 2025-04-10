@@ -44,5 +44,6 @@ spec:
     app: orders
   ports:
   - protocol: TCP
-    port:  30002
+    nodePort:  30002
+    port: 8002
     targetPort: 8002

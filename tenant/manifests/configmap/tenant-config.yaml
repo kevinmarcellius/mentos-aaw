@@ -4,7 +4,7 @@ metadata:
   name: tenant-config
   namespace: aaw-backend
 data:
-  AUTH_HOST: authentication.aaw-backend.svc.cluster.local
+  AUTH_HOST: authentication.aaw-backend.svc.cluster.local:8000
   DB_HOST: tenant-db.aaw-backend.svc.cluster.local
   DB_PORT: "5435"
   NODE_ENV: production
