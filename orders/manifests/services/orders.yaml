@@ -27,6 +27,10 @@ spec:
         volumeMounts:
         - name: orders-storage
           mountPath: /app/data
+        resources:
+          requests: 
+            cpu: "100m"
+            memory: "128Mi"
       volumes:
       - name: orders-storage
         persistentVolumeClaim:
