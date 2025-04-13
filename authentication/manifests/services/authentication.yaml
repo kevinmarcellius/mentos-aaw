@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: authentication
-        image: authentication-authentication:latest
-        imagePullPolicy: Never
+        image: rayhanrandi10/aaw-authentication:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
         envFrom:

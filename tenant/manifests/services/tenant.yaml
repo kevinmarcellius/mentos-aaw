@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: tenant
-        image: tenant-tenant:latest
-        imagePullPolicy: Never
+        image: rayhanrandi10/aaw-tenant:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8004
         envFrom:

@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: orders
-        image: orders-orders:latest
-        imagePullPolicy: Never
+        image: rayhanrandi10/aaw-orders:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8002
         envFrom:
