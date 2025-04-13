@@ -11,7 +11,7 @@ for service in "${services[@]}"; do
     echo "[*] Applying manifests for $service..."
     kubectl apply -f "./$service/manifests/configmap"
     kubectl apply -f "./$service/manifests/secrets"
-    kubectl apply -f "./$service/manifests/pv"
+    kubectl apply -f "./$service/manifests/pv/$service-pvc.yaml"
     kubectl apply -f "./$service/manifests/services"
 done
 
