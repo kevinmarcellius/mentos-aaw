@@ -2,10 +2,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: wishlist-config
-  namespace: aaw-test
+  namespace: aaw-backend
 data:
   TENANT_ID: e4f770bf-9181-4d75-8ebe-8a9e4db5055c
-  DB_HOST: wishlist-db.aaw-test.svc.cluster.local
+  DB_HOST: wishlist-db.aaw-backend.svc.cluster.local
   DB_PORT: "5436"
   NODE_ENV: production
   PORT: "8005"
