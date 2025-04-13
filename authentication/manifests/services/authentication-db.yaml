@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: authentication-db
-        image: postgres:latest
+        image: postgres:16
         volumeMounts:
           - name: authentication-initdb-volume
             mountPath: /docker-entrypoint-initdb.d/

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: tenant-db
-        image: postgres:latest
+        image: postgres:16
         volumeMounts:
           - name: tenant-initdb-volume
             mountPath: /docker-entrypoint-initdb.d/

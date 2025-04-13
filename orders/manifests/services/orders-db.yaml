@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: orders-db
-        image: postgres:latest
+        image: postgres:16
         volumeMounts:
           - name: orders-initdb-volume
             mountPath: /docker-entrypoint-initdb.d/
