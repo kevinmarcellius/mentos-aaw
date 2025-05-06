@@ -16,7 +16,7 @@ spec:
       containers:
       - name: products
         image: rayhanrandi10/aaw-products:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8003
         envFrom:
