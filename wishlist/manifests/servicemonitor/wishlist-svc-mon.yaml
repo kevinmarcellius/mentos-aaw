@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: marketplace-prometheus-stack
+    serviceMonitorSelector: wishlist
+  name: wishlist-monitoring
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: wishlist
+  namespaceSelector:
+    matchNames:
+    - aaw-backend
+  endpoints:
+  - name: http
+    interval: 15s
+    path: /metrics

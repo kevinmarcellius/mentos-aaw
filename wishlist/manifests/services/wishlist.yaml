@@ -43,7 +43,8 @@ spec:
   selector:
     app: wishlist
   ports:
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     nodePort:  30005
     port:  8005
     targetPort: 8005

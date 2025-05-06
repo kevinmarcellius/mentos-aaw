@@ -79,6 +79,10 @@ API documentation is available through Postman.
 
 Import the `aaw-marketplace.postman_collection.json` and `aaw-marketplace.postman_environment.json` into Postman to use the available API documentation. Dedicated documentation in the form of Swagger generated JSON's are also available in each service's `src/docs` directory.
 
+## Observability
+
+The `kube-prometheus-stack` helm chart will be used to monitor the microservices through `ServiceMonitor` CRDs, which can then be queried further from either the built-in Grafana dashboard or from a custom-made dashboard. These `ServiceMonitor` CRDs are placed within each services' manifest directory within `<svc>/manifests/servicemonitor`.
+
 ## Database Schema
 
 Managed through Drizzle ORM with migrations in drizzle directory.

@@ -43,7 +43,8 @@ spec:
   selector:
     app: products
   ports:
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     nodePort:  30003
     port: 8003
     targetPort: 8003

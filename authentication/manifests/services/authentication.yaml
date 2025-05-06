@@ -43,7 +43,8 @@ spec:
   selector:
     app: authentication
   ports:
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     nodePort:  30000
     port: 8000
     targetPort: 8000

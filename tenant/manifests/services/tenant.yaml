@@ -43,7 +43,8 @@ spec:
   selector:
     app: tenant
   ports:
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     nodePort:  30004
     port: 8004
     targetPort: 8004
