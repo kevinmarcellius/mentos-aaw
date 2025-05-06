@@ -5,12 +5,12 @@ set -eo pipefail
 echo "[*] Setting up cluster monitoring..."
 echo "[i] Using latest kube-prometheus-stack helm chart."
 
-# helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-# helm repo update
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
 
-# echo "[*] Installing kube-prometheus-stack helm chart..."
+echo "[*] Installing kube-prometheus-stack helm chart..."
 
-# helm install marketplace-prometheus-stack prometheus-community/kube-prometheus-stack --namespace monitoring
+helm install marketplace-prometheus-stack prometheus-community/kube-prometheus-stack --namespace monitoring
 
 echo "[i] Prometheus Grafana stack applied successfully."
 
