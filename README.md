@@ -1,8 +1,5 @@
 # Marketplace API
 
-**Rayhan Putra Randi**<br>
-**2106705644**
-
 ## Overview
 
 Microservice based REST API for a marketplace application built with Express.js, PostgreSQL, and Drizzle ORM.
@@ -54,6 +51,25 @@ npm run generate-token-prod
 ### Notes
 1. Approve builds for `bcrypt`, `es5-ext`, `esbuild` with `pnpm approve-builds`.
 2. Set `Auto Attach` on VSC to `Always` to enable debugging.
+
+## K8s Deployment
+
+The services' K8s cluster can be deployed through the scripts available in `deployment/`. You can run them in the following order:
+
+1. Setup initial deployment for Services, PVs, PVCs, ConfigMaps, and Secrets:
+
+    ```bash
+    ./deployment/run.sh
+    ```
+
+2. Install chart for cluster monitoring:
+
+    ```bash
+    ./deployment/setup-cluster-monitoring.sh
+    ```
+
+
+
 
 ## Environment Variables
 
