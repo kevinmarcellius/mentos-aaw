@@ -4,8 +4,8 @@ metadata:
   name: products-config
   namespace: aaw-backend
 data:
-  AUTH_HOST: authentication.aaw-backend.svc.cluster.local
-  TENANT_HOST: tenant.aaw-backend.svc.cluster.local
+  AUTH_HOST: authentication.aaw-backend.svc.cluster.local:8000
+  TENANT_HOST: tenant.aaw-backend.svc.cluster.local:8004
   DB_HOST: products-db.aaw-backend.svc.cluster.local
   DB_PORT: "5434"
   NODE_ENV: production

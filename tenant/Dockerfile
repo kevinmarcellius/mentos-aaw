@@ -19,7 +19,7 @@ RUN pnpm run build
 # Production image
 FROM node:18.18.2-slim
 
-ENV PORT 8000
+ENV PORT 8004
 ENV NODE_ENV production
 
 WORKDIR /marketplace

@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: tenant
-        image: tenant-tenant:latest
-        imagePullPolicy: Never
+        image: rayhanrandi10/aaw-tenants:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8004
         envFrom:
@@ -44,5 +44,6 @@ spec:
     app: tenant
   ports:
   - protocol: TCP
-    port:  30004
+    nodePort:  30004
+    port: 8004
     targetPort: 8004

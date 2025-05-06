@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: products
-        image: products-products:latest
-        imagePullPolicy: Never
+        image: rayhanrandi10/aaw-products:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8003
         envFrom:
@@ -44,5 +44,6 @@ spec:
     app: products
   ports:
   - protocol: TCP
-    port:  30003
+    nodePort:  30003
+    port: 8003
     targetPort: 8003

@@ -4,7 +4,7 @@ metadata:
   name: orders-config
   namespace: aaw-backend
 data:
-  PRODUCT_HOST: products.aaw-backend.svc.cluster.local
+  PRODUCT_HOST: products.aaw-backend.svc.cluster.local:8003
   DB_HOST: orders-db.aaw-backend.svc.cluster.local
   DB_PORT: "5433"
   NODE_ENV: production

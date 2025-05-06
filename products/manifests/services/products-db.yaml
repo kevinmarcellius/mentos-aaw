@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: products-db
-        image: postgres:latest
+        image: postgres:16
         volumeMounts:
           - name: products-initdb-volume
             mountPath: /docker-entrypoint-initdb.d/
