@@ -3,9 +3,18 @@ import { eq } from "drizzle-orm";
 import * as schema from '@db/schema/categories'
 import { redisClient } from "@src/db";
 
-export const getAllCategoriesByTenantId = async (tenantId: string, page: number = 1) => {
-    const pageLimit = 10;
-    const redisKey = `categories:${tenantId}:page:${page}`;
+type GetAllCategoriesOptions = {
+    limit?: number;
+    offset?: number;
+};
+
+export const getAllCategoriesByTenantId = async (
+    tenantId: string,
+    options: GetAllCategoriesOptions = {}
+) => {
+    const limit = options.limit ?? 10;
+    const offset = options.offset ?? 0;
+    const redisKey = `categories:${tenantId}:limit:${limit}:offset:${offset}`;
 
     // Check if data exists in Redis
     const cachedData = await redisClient.get(redisKey);
@@ -14,12 +23,11 @@ export const getAllCategoriesByTenantId = async (tenantId: string, page: number 
     }
 
     // Fetch data from the database
-    const offset = (page - 1) * pageLimit;
     const result = await db
         .select()
         .from(schema.categories)
         .where(eq(schema.categories.tenant_id, tenantId))
-        .limit(pageLimit)
+        .limit(limit)
         .offset(offset);
 
     // Store the result in Redis

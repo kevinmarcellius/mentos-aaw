@@ -1,19 +1,37 @@
-import { InternalServerErrorResponse } from "@src/commons/patterns"
+import { InternalServerErrorResponse } from "@src/commons/patterns";
 import { getAllCategoriesByTenantId } from "../dao/getAllCategoriesByTenantId.dao";
+import { getCategoriesCountByTenantId } from "../dao/getCategoriesCountByTenantId.dao";
 
-export const getAllCategoriesService = async (query: { page?: number }) => {
+interface PaginationParams {
+    page?: number;
+    pageSize?: number;
+}
+
+const ALLOWED_PAGE_SIZES = [5, 10, 20];
+
+export const getAllCategoriesService = async (params: PaginationParams = {}) => {
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
         if (!SERVER_TENANT_ID) {
             return new InternalServerErrorResponse('Server Tenant ID not found').generate();
         }
 
-        const page = query.page || 1; // Default to page 1 if not provided
-        const categories = await getAllCategoriesByTenantId(SERVER_TENANT_ID, page);
+        const page = params.page && params.page > 0 ? params.page : 1;
+        const pageSize = ALLOWED_PAGE_SIZES.includes(params.pageSize ?? 10) ? params.pageSize! : 10;
+        const offset = (page - 1) * pageSize;
+
+        const categories = await getAllCategoriesByTenantId(SERVER_TENANT_ID, { limit: pageSize, offset });
+        const total = await getCategoriesCountByTenantId(SERVER_TENANT_ID);
 
         return {
             data: {
-                categories
+                categories,
+                pagination: {
+                    page,
+                    pageSize,
+                    total,
+                    totalPages: Math.ceil(total / pageSize)
+                }
             },
             status: 200
         };

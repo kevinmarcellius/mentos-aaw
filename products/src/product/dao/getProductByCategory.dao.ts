@@ -1,8 +1,20 @@
 import { db } from "@src/db";
 import { eq, and } from "drizzle-orm";
-import * as schema from '@db/schema/products'
+import * as schema from '@db/schema/products';
 
-export const getProductByCategory = async (tenantId: string, category_id: string) => {
+type GetProductByCategoryOptions = {
+    limit?: number;
+    offset?: number;
+};
+
+export const getProductByCategory = async (
+    tenantId: string,
+    category_id: string,
+    options: GetProductByCategoryOptions = {}
+) => {
+    const limit = options.limit ?? 10;
+    const offset = options.offset ?? 0;
+
     const result = await db
         .select()
         .from(schema.products)
@@ -12,5 +24,8 @@ export const getProductByCategory = async (tenantId: string, category_id: string
                 eq(schema.products.category_id, category_id)
             )
         )
+        .limit(limit)
+        .offset(offset);
+
     return result;
-}
+};

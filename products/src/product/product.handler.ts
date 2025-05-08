@@ -3,10 +3,12 @@ import * as Service from './services';
 
 export const getAllProductsHandler = async (req: Request, res: Response) => {
     const rawPage = req.query.page;
+    const rawPageSize = req.query.pageSize;
+
     const page = rawPage ? Number(rawPage) : undefined;
+    const pageSize = rawPageSize ? Number(rawPageSize) : undefined;
 
-
-    const response = await Service.getAllProductsService({page});
+    const response = await Service.getAllProductsService({ page, pageSize });
     return res.status(response.status).send(response.data);
 }
 
@@ -23,8 +25,14 @@ export const getProductByIdHandler = async (req: Request, res: Response) => {
 }
 
 export const getProductByCategoryHandler = async (req: Request, res: Response) => {
-    const { category_id } = req.params
-    const response = await Service.getProductByCategoryService(category_id);
+    const { category_id } = req.params;
+    const rawPage = req.query.page;
+    const rawPageSize = req.query.pageSize;
+
+    const page = rawPage ? Number(rawPage) : undefined;
+    const pageSize = rawPageSize ? Number(rawPageSize) : undefined;
+
+    const response = await Service.getProductByCategoryService(category_id, { page, pageSize });
     return res.status(response.status).send(response.data);
 }
 
@@ -36,9 +44,12 @@ export const createProductHandler = async (req: Request, res: Response) => {
 
 export const getAllCategoryHandler = async (req: Request, res: Response) => {
     const rawPage = req.query.page;
+    const rawPageSize = req.query.pageSize;
+
     const page = rawPage ? Number(rawPage) : undefined;
+    const pageSize = rawPageSize ? Number(rawPageSize) : undefined;
     
-    const response = await Service.getAllCategoriesService({ page });
+    const response = await Service.getAllCategoriesService({ page, pageSize });
     return res.status(response.status).send(response.data);
 }
 

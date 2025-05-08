@@ -3,22 +3,29 @@ import { eq } from "drizzle-orm";
 import * as schema from '@db/schema/products'
 import { redisClient } from "@src/db";
 
-const PAGE_SIZE = 10;
+type GetAllProductsOptions = {
+    limit?: number;
+    offset?: number;
+};
 
-export const getAllProductsByTenantId = async (tenantId: string, page: number = 1) => {
-    const redisKey = `products:${tenantId}:page:${page}`;
+export const getAllProductsByTenantId = async (
+    tenantId: string,
+    options: GetAllProductsOptions = {}
+) => {
+    const limit = options.limit ?? 10;
+    const offset = options.offset ?? 0;
+    const redisKey = `products:${tenantId}:limit:${limit}:offset:${offset}`;
     const cachedData = await redisClient.get(redisKey);
 
     if (cachedData) {
         return JSON.parse(cachedData);
     }
 
-    const offset = (page - 1) * PAGE_SIZE;
     const result = await db
         .select()
         .from(schema.products)
         .where(eq(schema.products.tenant_id, tenantId))
-        .limit(PAGE_SIZE)
+        .limit(limit)
         .offset(offset);
 
     await redisClient.set(redisKey, JSON.stringify(result), { EX: 3600 }); // Cache for 1 hour
