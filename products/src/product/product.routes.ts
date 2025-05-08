@@ -5,7 +5,7 @@ import * as Handler from './product.handler';
 
 const router = express.Router();
 
-router.get('/', Handler.getAllProductsHandler);
+router.get('/', validate(Validation.getAllProductsByTenantId), Handler.getAllProductsHandler);
 router.get('/category', validate(Validation.getAllCategoriesByTenantId), Handler.getAllCategoryHandler);
 router.get('/:id', validate(Validation.getProductByIdSchema), Handler.getProductByIdHandler);
 router.post('/many', validate(Validation.getManyProductDatasByIdSchema), Handler.getManyProductDatasByIdHandler);

@@ -1,7 +1,7 @@
 import { db } from "@src/db";
 import { eq } from "drizzle-orm";
 import * as schema from '@db/schema/products'
-import { redisClient } from "@src/redis";
+import { redisClient } from "@src/db";
 
 const PAGE_SIZE = 10;
 

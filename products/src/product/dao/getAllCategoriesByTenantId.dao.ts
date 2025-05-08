@@ -1,7 +1,7 @@
 import { db } from "@src/db";
 import { eq } from "drizzle-orm";
 import * as schema from '@db/schema/categories'
-import { redisClient } from "@src/redis";
+import { redisClient } from "@src/db";
 
 export const getAllCategoriesByTenantId = async (tenantId: string, page: number = 1) => {
     const pageLimit = 10;

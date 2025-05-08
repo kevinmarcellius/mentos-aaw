@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 import * as Service from './services';
 
 export const getAllProductsHandler = async (req: Request, res: Response) => {
-    const response = await Service.getAllProductsService();
+    const rawPage = req.query.page;
+    const page = rawPage ? Number(rawPage) : undefined;
+
+
+    const response = await Service.getAllProductsService({page});
     return res.status(response.status).send(response.data);
 }
 
@@ -31,8 +35,10 @@ export const createProductHandler = async (req: Request, res: Response) => {
 }
 
 export const getAllCategoryHandler = async (req: Request, res: Response) => {
-    const { page } = req.query;
-    const response = await Service.getAllCategoriesService(page);
+    const rawPage = req.query.page;
+    const page = rawPage ? Number(rawPage) : undefined;
+    
+    const response = await Service.getAllCategoriesService({ page });
     return res.status(response.status).send(response.data);
 }
 
