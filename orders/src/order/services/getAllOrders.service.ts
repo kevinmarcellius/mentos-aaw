@@ -1,7 +1,6 @@
 import { InternalServerErrorResponse, NotFoundResponse } from "@src/commons/patterns";
 import { getAllOrders } from "../dao/getAllOrders.dao";
 import { getOrdersCount } from "../dao/getOrdersCount.dao"; // Adjusted to match the correct module path
-import { redisClient } from "@src/db"; // Corrected import path
 import { User } from "@src/types";
 
 interface PaginationParams {
@@ -29,16 +28,7 @@ export const getAllOrdersService = async (
         const pageSize = ALLOWED_PAGE_SIZES.includes(params.pageSize ?? 10) ? params.pageSize! : 10;
         const offset = (page - 1) * pageSize;
 
-        const redisKey = `orders:${SERVER_TENANT_ID}:${user.id}:page:${page}:pageSize:${pageSize}`;
-
-        // Check if data exists in Redis
-        const cachedData = await redisClient.get(redisKey);
-        if (cachedData) {
-            return {
-                data: JSON.parse(cachedData),
-                status: 200,
-            };
-        }
+    
 
         // Fetch data from the database
         const items = await getAllOrders(SERVER_TENANT_ID, user.id, { limit: pageSize, offset });
@@ -54,8 +44,6 @@ export const getAllOrdersService = async (
             },
         };
 
-        // Store the result in Redis
-        await redisClient.set(redisKey, JSON.stringify(responseData), { EX: 3600 }); // Cache for 1 hour
 
         return {
             data: responseData,
