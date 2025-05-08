@@ -26,7 +26,12 @@ export const placeOrderService = async (
         const cartItems = await getAllCartItems(SERVER_TENANT_ID, user.id);
 
         // get the product datas
-        const productIds = cartItems.map((item) => item.product_id);
+        interface CartItem {
+            product_id: string;
+            quantity: number;
+        }
+
+        const productIds: string[] = (cartItems as CartItem[]).map((item: CartItem) => item.product_id);
         if (productIds.length === 0) {
             return new BadRequestResponse('Cart is empty').generate();
         }

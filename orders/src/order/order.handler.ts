@@ -3,9 +3,20 @@ import * as Service from "./services";
 
 export const getAllOrdersHandler = async (req: Request, res: Response) => {
     const { user } = req.body;
-    const response = await Service.getAllOrdersService(user);
-    return res.status(response.status).send(response.data);
-}
+    const rawPage = req.query.page;
+    const rawPageSize = req.query.pageSize;
+
+    const page = rawPage ? Number(rawPage) : 1;
+    const pageSize = rawPageSize ? Number(rawPageSize) : 10;
+
+    try {
+        const response = await Service.getAllOrdersService(user, { page, pageSize });
+        return res.status(response.status).send(response.data);
+    } catch (error) {
+        console.error("Error fetching orders:", error);
+        return res.status(500).send({ message: "Internal Server Error" });
+    }
+};
 
 export const getOrderDetailHandler = async (req: Request, res: Response) => {
     const { user } = req.body;
