@@ -5,7 +5,7 @@ import * as Handler from './cart.handler';
 
 const router = express.Router();
 
-router.get('/', verifyJWT, Handler.getAllCartItemsHandler);
+router.get('/', verifyJWT, validate(Validation.getAllCartItemSchema), Handler.getAllCartItemsHandler);
 router.post('/', verifyJWT, validate(Validation.addItemToCartSchema), Handler.addItemToCartHandler);
 router.put('/', verifyJWT, validate(Validation.editCartItemSchema), Handler.editCartItemHandler);
 router.delete('/', verifyJWT, validate(Validation.deleteCartItemSchema), Handler.deleteCartItemHandler);

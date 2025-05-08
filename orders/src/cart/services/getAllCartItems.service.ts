@@ -1,9 +1,18 @@
 import { InternalServerErrorResponse, NotFoundResponse } from "@src/commons/patterns";
 import { getAllCartItems } from "../dao/getAllCartItems.dao";
+import { getCartItemsCount } from "../dao/getCartItemsCount.dao";
 import { User } from "@src/types";
+
+interface PaginationParams {
+    page?: number;
+    pageSize?: number;
+}
+
+const ALLOWED_PAGE_SIZES = [5, 10, 20];
 
 export const getAllCartItemsService = async (
     user: User,
+    params: PaginationParams = {}
 ) => {
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
@@ -15,13 +24,26 @@ export const getAllCartItemsService = async (
             return new NotFoundResponse('User not found').generate();
         }
 
-        const items = await getAllCartItems(SERVER_TENANT_ID, user.id);
+        const page = params.page && params.page > 0 ? params.page : 1;
+        const pageSize = ALLOWED_PAGE_SIZES.includes(params.pageSize ?? 10) ? params.pageSize! : 10;
+        const offset = (page - 1) * pageSize;
+
+        const items = await getAllCartItems(SERVER_TENANT_ID, user.id, { limit: pageSize, offset });
+        const total = await getCartItemsCount(SERVER_TENANT_ID, user.id);
 
         return {
-            data: items,
+            data: {
+                items,
+                pagination: {
+                    page,
+                    pageSize,
+                    total,
+                    totalPages: Math.ceil(total / pageSize)
+                }
+            },
             status: 200,
-        }
+        };
     } catch (err: any) {
         return new InternalServerErrorResponse(err).generate();
     }
-}
+};
