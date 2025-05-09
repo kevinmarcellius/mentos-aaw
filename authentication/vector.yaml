@@ -1,0 +1,30 @@
+sources:
+  logfile:
+    type: file
+    include:
+      - ./var/log/data/authentication/*.log
+
+transforms:
+  parse_json:
+    type: remap
+    inputs:
+      - logfile
+    source: |
+      del(.file)
+      del(.source_type)
+      . = parse_json!(.message)
+      .time = now()
+      
+sinks:
+  loki:
+    type: loki
+    inputs:
+      - parse_json
+    compression: snappy
+    endpoint: http://loki:3100
+    labels:
+      container: app-auth
+      stream: stream-auth
+      level: "{{ .level }}"
+    encoding:
+      codec: json
