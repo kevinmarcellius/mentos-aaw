@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: marketplace-prometheus-stack
+    serviceMonitorSelector: orders
+  name: orders-monitoring
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: orders
+  namespaceSelector:
+    matchNames:
+    - aaw-backend
+  endpoints:
+  - port: http
+    interval: 15s
+    path: /metrics

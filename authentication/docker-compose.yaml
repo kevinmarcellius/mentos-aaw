@@ -15,6 +15,8 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
+    volumes:
+      - log_data:/logs/
     depends_on:
       - auth-db
     networks:
@@ -36,7 +38,24 @@ services:
     networks:
       - marketplace-net
 
+  auth-vector:
+    depends_on:
+      - authentication
+    image: timberio/vector:0.42.0-alpine
+    container_name: auth-vector
+    volumes:
+      - ./vector.yaml:/etc/vector/vector.yaml:ro
+      # mount log file paths as necessary with :ro read only permissions
+      - log_data:/var/log/data/authentication:ro
+    env_file:
+      - .env
+    ports:  
+      - "8686:8686"
+    networks:
+      - marketplace-net
+
 volumes:
+  log_data:
   postgres_data:
 
 networks:

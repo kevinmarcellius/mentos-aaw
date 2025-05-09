@@ -8,3 +8,4 @@ dist
 postgres-data/
 postgres_data/
 deployment/*-svc.yaml
+*/logs/*

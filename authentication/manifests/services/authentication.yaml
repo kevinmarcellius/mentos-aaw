@@ -16,7 +16,7 @@ spec:
       containers:
       - name: authentication
         image: rayhanrandi10/aaw-authentication:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
         envFrom:
@@ -43,7 +43,8 @@ spec:
   selector:
     app: authentication
   ports:
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     nodePort:  30000
     port: 8000
     targetPort: 8000
