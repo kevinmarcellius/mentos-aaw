@@ -26,5 +26,7 @@ sinks:
       container: app-auth
       stream: stream-auth
       level: "{{ .level }}"
+      hostname: "{{ .hostname }}"
+      pid: "{{ .pid }}"
     encoding:
       codec: json
