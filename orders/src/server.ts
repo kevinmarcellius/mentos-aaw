@@ -4,11 +4,11 @@ dotenv.config();
 import express, { Express, NextFunction, Request, Response } from "express";
 import cors from "cors";
 
+import logger from './commons/logger';
 import cartRoutes from './cart/cart.routes'
 import orderRoutes from './order/order.routes'
 
 import express_prom_bundle from "express-prom-bundle";
-import pino from "pino";
 
 const app: Express = express();
 
@@ -22,25 +22,6 @@ const metricsMiddleware = express_prom_bundle({
   customLabels: { project_name: 'marketplace-orders' },
   promClient: {
     collectDefaultMetrics: {}
-  }
-});
-
-// Asynchronous logging
-const fs = require('fs');
-if (!fs.existsSync('./logs')) {
-  fs.mkdirSync('./logs');
-}
-const logger = pino({
-  formatters: {
-    level: (label) => {
-      return {
-        level: label
-      }
-    }
-  },
-  transport: {
-    target: 'pino/file',
-    options: { destination: './logs/app.log' }
   }
 });
 
