@@ -23,6 +23,7 @@
     "express-prom-bundle": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
+    "pino": "^9.6.0",
     "prom-client": "^15.1.2",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1",
