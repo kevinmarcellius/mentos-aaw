@@ -4,6 +4,7 @@ dotenv.config();
 import express, { Express, NextFunction, Request, Response } from "express";
 import cors from "cors";
 
+import logger from "./commons/logger";
 import authRoutes from "./user/user.routes"
 
 import express_prom_bundle from "express-prom-bundle";
@@ -22,6 +23,7 @@ const metricsMiddleware = express_prom_bundle({
     collectDefaultMetrics: {}
   }
 });
+
 
 // Middleware
 app.use(metricsMiddleware);
@@ -61,8 +63,8 @@ app.use((req: Request, res: Response) => {
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV}`);
+  logger.info(`Server running on port ${PORT}`);
+  logger.info(`Environment: ${process.env.NODE_ENV}`);
 });
 
 export default app;

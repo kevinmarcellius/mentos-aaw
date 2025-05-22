@@ -16,7 +16,7 @@ spec:
       containers:
       - name: wishlist
         image: rayhanrandi10/aaw-wishlist:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8005
         envFrom:
@@ -43,7 +43,8 @@ spec:
   selector:
     app: wishlist
   ports:
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     nodePort:  30005
     port:  8005
     targetPort: 8005
