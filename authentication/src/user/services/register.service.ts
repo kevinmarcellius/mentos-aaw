@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import { NewUser } from '@db/schema/users';
 import { insertNewUser } from '../dao/insertNewUser.dao';
 import { InternalServerErrorResponse } from '@src/commons/patterns';
+import logger from '../../commons/logger';
 
 export const registerService = async (
     username: string,
@@ -16,6 +17,7 @@ export const registerService = async (
         const hashedPassword = await bcrypt.hash(password, salt);
 
         if (!process.env.TENANT_ID) {
+            logger.error('Server tenant ID is missing');
             return new InternalServerErrorResponse("Server tenant ID is missing").generate();
         }
 
@@ -36,6 +38,7 @@ export const registerService = async (
             status: 201
         }
     } catch (err: any) {
+        logger.error({ err }, 'Failed to register user');
         return new InternalServerErrorResponse(err).generate();
     }
 }

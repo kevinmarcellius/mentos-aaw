@@ -3,6 +3,7 @@ import { BadRequestResponse, InternalServerErrorResponse, NotFoundResponse } fro
 import { createOrder } from "../dao/createOrder.dao";
 import axios, { AxiosResponse } from "axios";
 import { User, Product } from "@src/types";
+import logger from "../../commons/logger";
 
 export const placeOrderService = async (
     user: User,
@@ -11,14 +12,17 @@ export const placeOrderService = async (
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
         if (!SERVER_TENANT_ID) {
+            logger.error("Server tenant id not found");
             return new InternalServerErrorResponse("Server tenant id not found").generate();
         }
 
         if (!['JNE', 'TIKI', 'SICEPAT', 'GOSEND', 'GRAB_EXPRESS'].includes(shipping_provider)) {
+            logger.warn(`Shipping provider not found: ${shipping_provider}`);
             return new NotFoundResponse('Shipping provider not found').generate();
         }
 
         if (!user.id) {
+            logger.error("User id not found");
             return new InternalServerErrorResponse("User id not found").generate();
         }
 
@@ -33,10 +37,12 @@ export const placeOrderService = async (
 
         const productIds: string[] = (cartItems as CartItem[]).map((item: CartItem) => item.product_id);
         if (productIds.length === 0) {
+            logger.warn(`Cart is empty for user: ${user.id}`);
             return new BadRequestResponse('Cart is empty').generate();
         }
         const products: AxiosResponse<Product[], any> = await axios.post(`http://${process.env.PRODUCT_HOST}/api/product/many`, { productIds });
         if (products.status !== 200) {
+            logger.error(`Failed to get products for productIds: ${productIds.join(", ")}`);
             return new InternalServerErrorResponse("Failed to get products").generate();
         }
 
@@ -54,7 +60,7 @@ export const placeOrderService = async (
             status: 201,
         }
     } catch (err: any) {
-        console.error(err)
+        logger.error({ err }, "Error in placeOrderService");
         return new InternalServerErrorResponse(err).generate();
     }
 }

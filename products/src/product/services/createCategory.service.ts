@@ -1,6 +1,7 @@
 import { NewCategory } from "@db/schema/categories";
 import { InternalServerErrorResponse } from "@src/commons/patterns"
 import { createNewCategory } from "../dao/createNewCategory.dao";
+import logger from "../../commons/logger";
 
 export const createCategoryService = async (
     name: string,
@@ -8,6 +9,7 @@ export const createCategoryService = async (
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
         if (!SERVER_TENANT_ID) {
+            logger.error('Server Tenant ID not found');
             return new InternalServerErrorResponse('Server Tenant ID not found').generate()
         }
 
@@ -25,6 +27,7 @@ export const createCategoryService = async (
             status: 201,
         }
     } catch (err: any) {
+        logger.error({ err }, 'Failed to create category');
         return new InternalServerErrorResponse(err).generate()
     }
 }
