@@ -1,6 +1,7 @@
 import { InternalServerErrorResponse, UnauthorizedResponse } from "@src/commons/patterns";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { getUserById } from "../dao/getUserById.dao";
+import logger from "../../commons/logger";
 
 export const verifyAdminTokenService = async (
     token: string
@@ -14,14 +15,17 @@ export const verifyAdminTokenService = async (
         const { id, tenant_id } = payload;
         const SERVER_TENANT_ID = process.env.ADMIN_TENANT_ID;
         if (!SERVER_TENANT_ID) {
+            logger.error("Server tenant ID is missing");
             return new InternalServerErrorResponse("Server tenant ID is missing").generate();
         }
         if (tenant_id !== SERVER_TENANT_ID) {
+            logger.warn(`Invalid token: tenant_id mismatch (expected: ${SERVER_TENANT_ID}, got: ${tenant_id})`);
             return new UnauthorizedResponse("Invalid token").generate();
         }
 
         const user = await getUserById(id, SERVER_TENANT_ID);
         if (!user) {
+            logger.warn(`Invalid token: user not found (id: ${id}, tenant_id: ${SERVER_TENANT_ID})`);
             return new UnauthorizedResponse("Invalid token").generate();
         }
 
@@ -32,6 +36,7 @@ export const verifyAdminTokenService = async (
             status: 200
         }
     } catch (err: any) {
+        logger.error({ err }, "Failed to verify admin token");
         return new UnauthorizedResponse("Invalid token").generate();
     }
 }

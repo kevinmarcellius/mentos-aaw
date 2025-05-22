@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { getUserByUsername } from '../dao/getUserByUsername.dao';
-
 import { InternalServerErrorResponse, NotFoundResponse } from "@src/commons/patterns"
 import { User } from '@db/schema/users';
+import logger from '../../commons/logger';
 
 export const loginService = async (
     username: string,
@@ -12,6 +12,7 @@ export const loginService = async (
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
         if (!SERVER_TENANT_ID) {
+            logger.error('Server tenant ID is missing');
             return new InternalServerErrorResponse("Server tenant ID is missing").generate();
         }
         const user: User = await getUserByUsername(
@@ -19,11 +20,13 @@ export const loginService = async (
             SERVER_TENANT_ID,
         );
         if (!user) {
+            logger.warn(`User not found: ${username}`);
             return new NotFoundResponse("User not found").generate();
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
+            logger.warn(`Invalid password for user: ${username}`);
             return new NotFoundResponse("Invalid password").generate();
         }
 
@@ -43,6 +46,7 @@ export const loginService = async (
             status: 200
         }
     } catch (err: any) {
+        logger.error({ err }, 'Login service error');
         return new InternalServerErrorResponse(err).generate();
     }
 }

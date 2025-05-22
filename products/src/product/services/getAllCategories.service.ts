@@ -1,6 +1,7 @@
 import { InternalServerErrorResponse } from "@src/commons/patterns";
 import { getAllCategoriesByTenantId } from "../dao/getAllCategoriesByTenantId.dao";
 import { getCategoriesCountByTenantId } from "../dao/getCategoriesCountByTenantId.dao";
+import logger from "../../commons/logger";
 
 interface PaginationParams {
     page?: number;
@@ -13,6 +14,7 @@ export const getAllCategoriesService = async (params: PaginationParams = {}) => 
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
         if (!SERVER_TENANT_ID) {
+            logger.error('Server Tenant ID not found');
             return new InternalServerErrorResponse('Server Tenant ID not found').generate();
         }
 
@@ -36,6 +38,7 @@ export const getAllCategoriesService = async (params: PaginationParams = {}) => 
             status: 200
         };
     } catch (err: any) {
+        logger.error({ err }, 'Failed to get all categories');
         return new InternalServerErrorResponse(err).generate();
     }
 };

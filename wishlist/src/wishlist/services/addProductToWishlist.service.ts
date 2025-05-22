@@ -3,6 +3,7 @@ import { InternalServerErrorResponse } from "@src/commons/patterns";
 import { addProductToWishlist } from "../dao/addProductToWishlist.dao";
 import { getWishlistById } from "../dao/getWishlistById.dao";
 import { User } from "@src/wishlist/types";
+import logger from "../../commons/logger";
 
 export const addProductToWishlistService = async (
     wishlist_id: string,
@@ -12,19 +13,23 @@ export const addProductToWishlistService = async (
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
         if (!SERVER_TENANT_ID) {
+            logger.error('Server tenant ID is missing');
             return new InternalServerErrorResponse('Server tenant ID is missing').generate();
         }
 
         if (!user.id) {
+            logger.error('User ID is missing');
             return new InternalServerErrorResponse('User ID is missing').generate();
         }
 
         const wishlist = await getWishlistById(SERVER_TENANT_ID, wishlist_id);
         if (!wishlist) {
+            logger.error(`Wishlist not found: ${wishlist_id}`);
             return new InternalServerErrorResponse('Wishlist not found').generate();
         }
 
         if (wishlist.user_id !== user.id) {
+            logger.error(`User ${user.id} is not authorized to add product to wishlist ${wishlist_id}`);
             return new InternalServerErrorResponse('User is not authorized to add product to this wishlist').generate();
         }
 
@@ -40,6 +45,7 @@ export const addProductToWishlistService = async (
             status: 201,
         };
     } catch (err: any) {
+        logger.error({ err }, 'Failed to add product to wishlist');
         return new InternalServerErrorResponse(err).generate();
     }
 }

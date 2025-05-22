@@ -2,6 +2,7 @@ import { InternalServerErrorResponse, NotFoundResponse } from "@src/commons/patt
 import { getAllCartItems } from "../dao/getAllCartItems.dao";
 import { getCartItemsCount } from "../dao/getCartItemsCount.dao";
 import { User } from "@src/types";
+import logger from "../../commons/logger";
 
 interface PaginationParams {
     page?: number;
@@ -17,10 +18,12 @@ export const getAllCartItemsService = async (
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
         if (!SERVER_TENANT_ID) {
+            logger.error("Tenant ID not found");
             return new InternalServerErrorResponse('Tenant ID not found').generate();
         }
 
         if (!user.id) {
+            logger.warn("User not found");
             return new NotFoundResponse('User not found').generate();
         }
 
@@ -44,6 +47,7 @@ export const getAllCartItemsService = async (
             status: 200,
         };
     } catch (err: any) {
+        logger.error({ err }, "Failed to get all cart items");
         return new InternalServerErrorResponse(err).generate();
     }
 };

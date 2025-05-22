@@ -2,6 +2,7 @@ import { db } from "@src/db";
 import { eq } from "drizzle-orm";
 import * as schema from '@db/schema/products'
 import { redisClient } from "@src/db";
+import logger from "../../commons/logger";
 
 type GetAllProductsOptions = {
     limit?: number;
@@ -20,6 +21,8 @@ export const getAllProductsByTenantId = async (
     if (cachedData) {
         return JSON.parse(cachedData);
     }
+
+    logger.info({ tenantId, limit, offset }, "Cache miss for products");
 
     const result = await db
         .select()

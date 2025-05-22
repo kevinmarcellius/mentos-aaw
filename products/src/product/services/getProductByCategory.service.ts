@@ -1,6 +1,7 @@
 import { InternalServerErrorResponse } from "@src/commons/patterns";
 import { getProductByCategory } from "../dao/getProductByCategory.dao";
 import { getProductsCountByTenantId } from "../dao/getProductsCountByTenantId.dao";
+import logger from "../../commons/logger";
 
 interface PaginationParams {
     page?: number;
@@ -16,6 +17,7 @@ export const getProductByCategoryService = async (
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
         if (!SERVER_TENANT_ID) {
+            logger.error('Server Tenant ID not found');
             return new InternalServerErrorResponse('Server Tenant ID not found').generate();
         }
 
@@ -39,6 +41,7 @@ export const getProductByCategoryService = async (
             status: 200
         };
     } catch (err: any) {
+        logger.error({ err }, 'Failed to get products by category');
         return new InternalServerErrorResponse(err).generate();
     }
 };

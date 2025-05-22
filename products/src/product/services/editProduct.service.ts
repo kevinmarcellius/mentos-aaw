@@ -1,5 +1,6 @@
 import { InternalServerErrorResponse } from "@src/commons/patterns";
 import { editProductById } from "../dao/editProductById.dao";
+import logger from "../../commons/logger";
 
 export const editProductService = async (
     id: string,
@@ -12,7 +13,8 @@ export const editProductService = async (
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
         if (!SERVER_TENANT_ID) {
-            return new InternalServerErrorResponse('Server Tenant ID not found').generate()
+            logger.error('Server Tenant ID not found');
+            return new InternalServerErrorResponse('Server Tenant ID not found').generate();
         }
 
         const product = await editProductById(SERVER_TENANT_ID, id, {
@@ -21,13 +23,14 @@ export const editProductService = async (
             price,
             quantity_available,
             category_id,
-        })
+        });
 
         return {
             data: product,
             status: 200,
-        }
+        };
     } catch (err: any) {
-        return new InternalServerErrorResponse(err).generate()
+        logger.error({ err }, 'Failed to edit product');
+        return new InternalServerErrorResponse(err).generate();
     }
 }

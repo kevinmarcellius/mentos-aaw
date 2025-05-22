@@ -2,6 +2,7 @@ import { db } from "@src/db";
 import { eq } from "drizzle-orm";
 import * as schema from '@db/schema/categories'
 import { redisClient } from "@src/db";
+import logger from "../../commons/logger";
 
 type GetAllCategoriesOptions = {
     limit?: number;
@@ -21,6 +22,8 @@ export const getAllCategoriesByTenantId = async (
     if (cachedData) {
         return JSON.parse(cachedData);
     }
+
+    logger.info({ tenantId, limit, offset }, "Cache miss for categories");
 
     // Fetch data from the database
     const result = await db

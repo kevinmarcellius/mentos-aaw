@@ -2,6 +2,7 @@ import { InternalServerErrorResponse } from "@src/commons/patterns";
 import { editCartDataById } from "../dao/editCartDataById.dao";
 import { deleteCartItem } from "../dao/deleteCartItem.dao";
 import { User } from "@src/types";
+import logger from "../../commons/logger";
 
 export const editCartItemService = async (
     user: User,
@@ -11,10 +12,12 @@ export const editCartItemService = async (
     try {
         const SERVER_TENANT_ID = process.env.TENANT_ID;
         if (!SERVER_TENANT_ID) {
+            logger.error('Tenant ID not found');
             return new InternalServerErrorResponse('Tenant ID not found').generate();
         }
 
         if (!user.id) {
+            logger.error('User ID not found');
             return new InternalServerErrorResponse('User ID not found').generate();
         }
 
@@ -33,6 +36,7 @@ export const editCartItemService = async (
             status: 200,
         }
     } catch (err: any) {
+        logger.error({ err }, 'editCartItemService failed');
         return new InternalServerErrorResponse(err).generate();
     }
 }
