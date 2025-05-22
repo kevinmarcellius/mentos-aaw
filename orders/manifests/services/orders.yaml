@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: orders
-        image: rayhanrandi10/aaw-orders:latest
+        image: rayhanrandi10/aaw-orders:capstone
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8002
@@ -27,14 +27,38 @@ spec:
         volumeMounts:
         - name: orders-storage
           mountPath: /app/data
+        - name: vector-log-volume
+          mountPath: /logs
         resources:
           requests: 
             cpu: "100m"
             memory: "128Mi"
+
+      - name: vector-agent
+        image: timberio/vector:0.42.0-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8686
+        envFrom:
+        - configMapRef:
+            name: authentication-config
+        volumeMounts:
+        - name: vector-log-volume
+          mountPath: /logs
+        - name: vector-config-volume
+          mountPath: /etc/vector
+        args: 
+            - "-c"
+            - "/etc/vector/vector.yaml"
       volumes:
       - name: orders-storage
         persistentVolumeClaim:
           claimName: orders-pvc
+      - name: vector-log-volume
+        emptyDir: {}
+      - name: vector-config-volume
+        configMap:
+          name: orders-config
 
 ---
 apiVersion: v1

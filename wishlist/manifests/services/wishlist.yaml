@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: wishlist
-        image: rayhanrandi10/aaw-wishlist:latest
+        image: rayhanrandi10/aaw-wishlist:capstone
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8005
@@ -27,10 +27,35 @@ spec:
         volumeMounts:
         - name: wishlist-storage
           mountPath: /app/data
+        - name: vector-log-volume
+          mountPath: /logs
+
+      - name: vector-agent
+        image: timberio/vector:0.42.0-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8686
+        envFrom:
+        - configMapRef:
+            name: authentication-config
+        volumeMounts:
+        - name: vector-log-volume
+          mountPath: /logs
+        - name: vector-config-volume
+          mountPath: /etc/vector
+        args: 
+            - "-c"
+            - "/etc/vector/vector.yaml"
+
       volumes:
       - name: wishlist-storage
         persistentVolumeClaim:
           claimName: wishlist-pvc
+      - name: vector-log-volume
+        emptyDir: {}
+      - name: vector-config-volume
+        configMap:
+          name: authentication-config
 
 ---
 apiVersion: v1
