@@ -5,7 +5,7 @@ metadata:
   namespace: aaw-backend
 data:
   AUTH_HOST: authentication.aaw-backend.svc.cluster.local:8000
-  DB_HOST: tenant-db.aaw-backend.svc.cluster.local
+  DB_HOST: mentos-1.cbvoh79ojbsp.us-east-1.rds.amazonaws.com
   DB_PORT: "5432"
   NODE_ENV: production
   PORT: "8004"
