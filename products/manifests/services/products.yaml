@@ -16,7 +16,7 @@ spec:
       containers:
       - name: products
         image: rayhanrandi10/aaw-products:capstone
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8003
         envFrom:
@@ -30,7 +30,7 @@ spec:
 
       - name: vector-agent
         image: timberio/vector:0.42.0-alpine
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8686
         envFrom:
