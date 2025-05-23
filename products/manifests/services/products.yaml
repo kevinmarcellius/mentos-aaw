@@ -25,8 +25,6 @@ spec:
         - secretRef:
             name: products-secrets
         volumeMounts:
-        - name: products-storage
-          mountPath: /app/data
         - name: vector-log-volume
           mountPath: /logs
 
@@ -48,9 +46,6 @@ spec:
             - "/etc/vector/vector.yaml"
 
       volumes:
-      - name: products-storage
-        persistentVolumeClaim:
-          claimName: products-pvc
       - name: vector-log-volume
         emptyDir: {}
       - name: vector-config-volume

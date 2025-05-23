@@ -5,8 +5,8 @@ metadata:
   namespace: aaw-backend
 data:
   TENANT_ID: e4f770bf-9181-4d75-8ebe-8a9e4db5055c
-  DB_HOST: wishlist-db.aaw-backend.svc.cluster.local
-  DB_PORT: "5436"
+  DB_HOST: mentos-1.cbvoh79ojbsp.us-east-1.rds.amazonaws.com
+  DB_PORT: "5432"
   NODE_ENV: production
   PORT: "8005"
   vector.yaml: |
