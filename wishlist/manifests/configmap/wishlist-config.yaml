@@ -9,6 +9,8 @@ data:
   DB_PORT: "5432"
   NODE_ENV: production
   PORT: "8005"
+  REDIS_HOST: 172.31.83.129
+  REDIS_PORT: "6379"
   vector.yaml: |
     sources:
       logfile:

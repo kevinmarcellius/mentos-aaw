@@ -10,6 +10,8 @@ data:
   NODE_ENV: production
   PORT: "8002"
   TENANT_ID: e4f770bf-9181-4d75-8ebe-8a9e4db5055c
+  REDIS_HOST: 172.31.83.129
+  REDIS_PORT: "6379"
   vector.yaml: |
     sources:
       logfile:
