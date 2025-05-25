@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: products
   namespace: aaw-backend
+  labels:
+    app: products
 spec:
   replicas: 2
   selector:
