@@ -60,6 +60,8 @@ kind: Service
 metadata:
   name: products
   namespace: aaw-backend
+  labels:
+    app: products
 spec:
   type: NodePort
   selector:

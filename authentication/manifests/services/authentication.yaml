@@ -60,6 +60,8 @@ kind: Service
 metadata:
   name: authentication
   namespace: aaw-backend
+  labels:
+    app: authentication
 spec:
   type: NodePort
   selector:

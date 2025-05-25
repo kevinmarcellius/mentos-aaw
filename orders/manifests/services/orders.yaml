@@ -63,6 +63,8 @@ kind: Service
 metadata:
   name: orders
   namespace: aaw-backend
+  labels:
+    app: orders
 spec:
   type: NodePort
   selector:
