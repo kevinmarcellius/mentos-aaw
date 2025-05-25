@@ -21,12 +21,12 @@ for service in "${services[@]}"; do
     else
         echo "[x] Error while applying Secrets for $service."
     fi
-    if kubectl apply -f "./$service/manifests/pv"; then
-        echo "[i] Successfully applied Persistent Volumes & PersistentVolumeClaims for $service."
-    else
-        echo "[x] Error while applying Persistent Volumes & PersistentVolumeClaims for $service."
-    fi
-    if kubectl apply -f "./$service/manifests/services"; then
+    # if kubectl apply -f "./$service/manifests/pv"; then
+        # echo "[i] Successfully applied Persistent Volumes & PersistentVolumeClaims for $service."
+    # else
+        # echo "[x] Error while applying Persistent Volumes & PersistentVolumeClaims for $service."
+    # fi
+    if kubectl apply -f "./$service/manifests/services/$service.yaml"; then
         echo "[i] Successfully applied Service for $service."
     else
         echo "[x] Error while applying Service for $service."

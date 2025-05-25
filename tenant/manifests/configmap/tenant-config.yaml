@@ -5,11 +5,13 @@ metadata:
   namespace: aaw-backend
 data:
   AUTH_HOST: authentication.aaw-backend.svc.cluster.local:8000
-  DB_HOST: tenant-db.aaw-backend.svc.cluster.local
-  DB_PORT: "5435"
+  DB_HOST: mentos-1.cbvoh79ojbsp.us-east-1.rds.amazonaws.com
+  DB_PORT: "5432"
   NODE_ENV: production
   PORT: "8004"
   TENANT_ID: e4f770bf-9181-4d75-8ebe-8a9e4db5055c
+  REDIS_HOST: 172.31.83.129
+  REDIS_PORT: "6379"
   vector.yaml: |
     sources:
       logfile:
@@ -34,7 +36,7 @@ data:
         inputs:
           - parse_json
         compression: snappy
-        endpoint: loki-0.logging.svc.cluster.local:3100
+        endpoint: http://loki.logging.svc.cluster.local:3100
         labels:
           container: app-tenant
           stream: stream-tenant

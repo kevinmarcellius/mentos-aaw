@@ -19,7 +19,7 @@ export const getAllCategoriesService = async (params: PaginationParams = {}) => 
         }
 
         const page = params.page && params.page > 0 ? params.page : 1;
-        const pageSize = ALLOWED_PAGE_SIZES.includes(params.pageSize ?? 10) ? params.pageSize! : 10;
+        const pageSize = params.pageSize && ALLOWED_PAGE_SIZES.includes(params.pageSize) ? params.pageSize : 10;
         const offset = (page - 1) * pageSize;
 
         const categories = await getAllCategoriesByTenantId(SERVER_TENANT_ID, { limit: pageSize, offset });

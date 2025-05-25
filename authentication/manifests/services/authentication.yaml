@@ -25,14 +25,12 @@ spec:
         - secretRef:
             name: authentication-secrets
         volumeMounts:
-        - name: authentication-storage
-          mountPath: /app/data
         - name: vector-log-volume
           mountPath: /logs
 
       - name: vector-agent
         image: timberio/vector:0.42.0-alpine
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8686
         envFrom:
@@ -48,9 +46,6 @@ spec:
             - "/etc/vector/vector.yaml"
 
       volumes:
-      - name: authentication-storage
-        persistentVolumeClaim:
-          claimName: authentication-pvc
       - name: vector-log-volume
         emptyDir: {}
       - name: vector-config-volume

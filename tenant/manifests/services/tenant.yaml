@@ -16,7 +16,7 @@ spec:
       containers:
       - name: tenant
         image: rayhanrandi10/aaw-tenant:capstone
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8004
         envFrom:
@@ -25,14 +25,12 @@ spec:
         - secretRef:
             name: tenant-secrets
         volumeMounts:
-        - name: tenant-storage
-          mountPath: /app/data
         - name: vector-log-volume
           mountPath: /logs
 
       - name: vector-agent
         image: timberio/vector:0.42.0-alpine
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8686
         envFrom:
@@ -48,9 +46,6 @@ spec:
             - "/etc/vector/vector.yaml"
  
       volumes:
-      - name: tenant-storage
-        persistentVolumeClaim:
-          claimName: tenant-pvc
       - name: vector-log-volume
         emptyDir: {}
       - name: vector-config-volume
